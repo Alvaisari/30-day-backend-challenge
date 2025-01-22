@@ -21,7 +21,7 @@ def create_table():
     with connect_to_db() as conn:
         cursor = conn.cursor()
         cursor.execute(
-            """CREATE TABLE)
+            """CREATE TABLE
             IF NOT EXISTS books
             (name TEXT, author TEXT)"""
         )
