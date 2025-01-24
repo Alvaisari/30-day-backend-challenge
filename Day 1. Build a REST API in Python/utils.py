@@ -23,7 +23,7 @@ def create_table():
         cursor.execute(
             """CREATE TABLE
             IF NOT EXISTS books
-            (name TEXT, author TEXT)"""
+            (name TEXT, author TEXT, UNIQUE(name, author))"""
         )
         conn.commit()
 
