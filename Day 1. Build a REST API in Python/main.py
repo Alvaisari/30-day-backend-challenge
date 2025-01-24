@@ -1,3 +1,4 @@
+import sqlite3
 from fastapi import FastAPI, HTTPException
 from typing import List
 from pydantic import BaseModel
@@ -29,14 +30,18 @@ def read_root():
     return {"The": "Library"}
 
 
-@app.post("/books", response_model=Book, status_code=201)
+@app.post("/books/", response_model=Book, status_code=201)
 async def create_book(book: Book):
     """Adds a book to the database"""
     try:
         add_book(book.name, book.author)
+    except sqlite3.IntegrityError as e:
+        raise HTTPException(status_code=401, detail="The book already exists!") from e
     except Exception as e:
-        raise HTTPException(status_code=501, detail=str(e)) from e
-    return {"message": "The book was created successfully!"}
+        raise HTTPException(
+            status_code=501, detail=f"Error adding the book: {e}"
+        ) from e
+    return book
 
 
 @app.get("/books", response_model=List[Book])
