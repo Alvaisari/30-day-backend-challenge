@@ -11,8 +11,16 @@ class Book(BaseModel):
     author: str
 
 
-create_table()
-app = FastAPI()
+def lifespan(app: FastAPI):
+    """Lifespan function to handle startup and shutdown"""
+    print("Starting up the up")
+    # Create table with books if it doesn't exist yet
+    create_table()
+    yield
+    print("Shutting down")
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 # FastAPI endpoints
