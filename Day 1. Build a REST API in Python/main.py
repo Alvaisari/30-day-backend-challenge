@@ -27,7 +27,9 @@ app = FastAPI(lifespan=lifespan)
 # FastAPI endpoints
 @app.get("/")
 def read_root():
-    return {"The": "Library"}
+    return {
+        "message": "Welcome to the Library API. Check documentation at localhost:8000/docs.",
+    }
 
 
 @app.post("/books/", response_model=Book, status_code=201)
