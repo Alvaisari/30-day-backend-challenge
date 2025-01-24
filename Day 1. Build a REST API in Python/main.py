@@ -47,7 +47,8 @@ async def create_book(book: Book):
 @app.get("/books", response_model=List[Book])
 async def get_books():
     """Get the list of all books in the database"""
-    return get_all_books()
+    list_of_books = get_all_books()
+    return [{"name": name, "author": author} for name, author in list_of_books]
 
 
 @app.delete("/books/{book_name}")
