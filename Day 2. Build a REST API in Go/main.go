@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"gin-gonic/gin"
+
+	"github.com/gin-gonic/gin"
 )
 
 // game represents data about a record game
@@ -25,4 +27,11 @@ var games = []game{
 // Get all games as JSON
 func getGames(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, games)
+}
+
+func main(){
+	router := gin.Default()
+	router.Get("/games", getGames)
+
+	router.Run("localhost:8080")
 }
