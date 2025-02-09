@@ -3,8 +3,6 @@ package main
 import (
 	"net/http"
 
-	"gin-gonic/gin"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -31,7 +29,7 @@ func getGames(c *gin.Context) {
 
 func main(){
 	router := gin.Default()
-	router.Get("/games", getGames)
+	router.GET("/games", getGames)
 
 	router.Run("localhost:8080")
 }
