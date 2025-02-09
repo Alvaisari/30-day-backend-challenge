@@ -1,5 +1,11 @@
 package main
 
+import (
+	"net/http"
+
+	"gin-gonic/gin"
+)
+
 // game represents data about a record game
 type game struct {
 	ID string `json:"id"`
@@ -14,4 +20,9 @@ var games = []game{
 	{ID: "2", Title: "Fallout", Developer: "Obsidian Entertainment", Price: "30"},
 	{ID: "3", Title: "Outer Wilds", Developer: "Mobius Digital", Price: "20"},
 	{ID: "4", Title: "Civilization VI", Developer: "Firaxis Games", Price: "60"},
+}
+
+// Get all games as JSON
+func getGames(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, games)
 }
