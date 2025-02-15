@@ -27,9 +27,24 @@ func getGames(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, games)
 }
 
+// Add a game from the JSON in the request body
+func postGames (c *gin.Context) {
+	var newGame game
+
+	// Bind the received JSON to newGame
+	if err := c.BindJSON(&newGame); err != nil {
+		return
+	}
+
+	// Add new game to the slice
+	games = append(games, newGame)
+	c.IndentedJSON(http.StatusCreated, newGame)
+}
+
 func main(){
 	router := gin.Default()
 	router.GET("/games", getGames)
+	router.POST("/games", postGames)
 
 	router.Run("localhost:8080")
 }
