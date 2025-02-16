@@ -27,6 +27,19 @@ func getGames(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, games)
 }
 
+// Get game by ID, return the 1st entry if games share same id
+func getGameById(c *gin.Context) {
+	id := c.Param("id")
+
+	for _, val := range games {
+		if val.ID == id {
+			c.IndentedJSON(http.StatusOK, val)
+			return
+		}
+	}
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "game not found"})
+}
+
 // Add a game from the JSON in the request body
 func postGames (c *gin.Context) {
 	var newGame game
@@ -44,6 +57,7 @@ func postGames (c *gin.Context) {
 func main(){
 	router := gin.Default()
 	router.GET("/games", getGames)
+	router.GET("/games/:id", getGameById)
 	router.POST("/games", postGames)
 
 	router.Run("localhost:8080")
